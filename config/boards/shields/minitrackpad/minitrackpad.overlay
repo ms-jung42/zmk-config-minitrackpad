@@ -3,21 +3,83 @@
  *
  * SPDX-License-Identifier: MIT
  */
+#include <dt-bindings/zmk/matrix_transform.h>
 
 / {
-    chosen {
-        zmk,kscan = &kscan0;
-    };
-
-    kscan0: kscan {
+	chosen {
+		zmk,kscan = &kscan_direct;
+		zmk,matrix-transform = &default_transform;
+	};
+    kscan_direct: kscan_direct {
         compatible = "zmk,kscan-gpio-direct";
         wakeup-source;
 
         input-gpios
-            = <&gpio0 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            , <&gpio0 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
-            ;
+        = <&gpio1 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
     };
 
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <1>;
+        rows = <1>;
+        map = < RC(0,0) >;
+    };
+
+    tps43_input: tps43_input {
+        compatible = "zmk,input-listener";
+        device = <&tps43>;
+    };
+};
+
+&pinctrl {
+    /* configuration for i2c0 device, default state */
+    i2c0_default: i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 7)>,
+                <NRF_PSEL(TWIM_SCL, 0, 27)>;
+        };
+    };
+
+    i2c0_sleep: i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 7)>,
+                <NRF_PSEL(TWIM_SCL, 0, 27)>;
+            low-power-enable;
+        };
+    };
+};
+
+&i2c0 {
+    compatible = "nordic,nrf-twim"; // I2C controller instead of generic
+    status = "okay";
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+    clock-frequency = <I2C_BITRATE_FAST>;
+    tps43: iqs5xx@74 {
+        status = "okay";
+        compatible = "azoteq,iqs5xx";
+        reg = <0x74>;
+
+        reset-gpios = <&pro_micro 0 GPIO_ACTIVE_LOW>;
+        rdy-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>;
+
+        /*
+         * Potentially non-exhaustive list of configuration options.
+         * See: dts/bindings/input/azoteq,iqs5xx-common.yaml for a full list.
+         */
+        one-finger-tap;
+        press-and-hold;
+        press-and-hold-time = <250>;
+        two-finger-tap;
+
+        scroll;
+        natural-scroll-y;
+
+        bottom-beta = <15>;
+        stationary-threshold = <5>;
+
+        flip_y;
+    };
 };
