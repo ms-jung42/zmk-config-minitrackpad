@@ -75,11 +75,13 @@
         two-finger-tap;
 
         scroll;
+        natural-scroll-x;
         natural-scroll-y;
 
         bottom-beta = <15>;
         stationary-threshold = <5>;
-
-        flip_y;
+        
+        flip-x;
+        flip-y;
     };
 };
