@@ -21,3 +21,5 @@
 include:
   - board: nice_nano_v2
     shield: minitrackpad
+  - board: nice_nano_v2
+    shield: settings_reset
