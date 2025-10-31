@@ -3,7 +3,7 @@ id: minitrackpad
 name: minitrackpad
 type: shield
 url: https://github.com/Spaceboards/SpaceboardsHardware/tree/master/Keyboards/2%25%20Milk
-requires: [pro_micro]
+requires: [nice_nano_v2]
 features:
   - keys
   - pointer
