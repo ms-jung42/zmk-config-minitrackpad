@@ -81,7 +81,7 @@
         bottom-beta = <15>;
         stationary-threshold = <5>;
         
-        flip-x;
-        flip-y;
+        // flip-x;
+        // flip-y;
     };
 };
