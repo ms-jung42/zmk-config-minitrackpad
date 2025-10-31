@@ -80,7 +80,7 @@
 
         bottom-beta = <15>;
         stationary-threshold = <5>;
-        
+        switch-xy;
         // flip-x;
         // flip-y;
     };
