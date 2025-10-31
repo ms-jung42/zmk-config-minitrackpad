@@ -79,9 +79,9 @@
         natural-scroll-y;
 
         bottom-beta = <15>;
-        stationary-threshold = <5>;
+        stationary-threshold = <7>;
         switch-xy;
-        // flip-x;
-        // flip-y;
+        flip-x;
+        flip-y;
     };
 };
