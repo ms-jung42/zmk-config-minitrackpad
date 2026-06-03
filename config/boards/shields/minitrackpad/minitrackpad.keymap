@@ -23,6 +23,7 @@
     };
 };
 
+#include <input/processors.dtsi>
 &mouse_input_listener {
     scroller {
         layers = <1>;
