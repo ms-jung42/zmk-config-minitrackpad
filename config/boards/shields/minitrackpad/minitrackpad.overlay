@@ -79,7 +79,7 @@
 };
 
 / {
-  mouse_input_listener {
+  trackball_listener: mouse_input_listener {
     compatible = "zmk,input-listener";
     device = <&pd0>;
   };
