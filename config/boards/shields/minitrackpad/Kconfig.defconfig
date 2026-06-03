@@ -4,6 +4,6 @@
 if SHIELD_MINITRACKPAD
 
 config ZMK_KEYBOARD_NAME
-    default "MiniTrackpad"
+    default "Trackball"
 
 endif
