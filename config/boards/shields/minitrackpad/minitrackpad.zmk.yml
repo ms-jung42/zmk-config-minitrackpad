@@ -1,9 +1,0 @@
-file_format: "1"
-id: minitrackpad
-name: minitrackpad
-type: shield
-url: https://github.com/Spaceboards/SpaceboardsHardware/tree/master/Keyboards/2%25%20Milk
-requires: [xiao_ble]
-features:
-  - keys
-  - pointer
