@@ -20,6 +20,6 @@
 ---
 include:
   - board: xiao_ble
-    shield: minitrackpad
+    shield: trackball
   - board: xiao_ble
     shield: settings_reset
