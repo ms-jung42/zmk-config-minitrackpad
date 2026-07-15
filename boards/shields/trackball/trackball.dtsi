@@ -65,28 +65,22 @@
 
 	mou1: pd@0 {
 		compatible = "pixart,paw3395";
-	    status = "disabled";
-		label = "MOU1";
+ 		label = "MOU1";
 		reg = <0>;
 		spi-max-frequency = <4000000>;
+		k  status = "okay";
+		irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		cpi = <600>;
+		invert-y;
+		evt-type = <INPUT_EV_REL>;
+		x-input-code = <INPUT_REL_X>;
+		y-input-code = <INPUT_REL_Y>;
 	};
 };
 
-// Config custom gpios
-&spi2 {
-  status = "okay";
-	pinctrl-0 = <&spi2_default>;
-	pinctrl-1 = <&spi2_sleep>;
-	pinctrl-names = "default", "sleep";
-	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
-};
-
-&mou1 {
-  status = "okay";
-	irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-	cpi = <600>;
-	invert-y;
-	evt-type = <INPUT_EV_REL>;
-	x-input-code = <INPUT_REL_X>;
-	y-input-code = <INPUT_REL_Y>;
+/{ 
+	mouse_input_listener {
+		compatible = "zmk, input-listner";
+		device = <&mou1>;
+	};
 };
