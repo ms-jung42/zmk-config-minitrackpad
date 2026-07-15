@@ -88,9 +88,8 @@
 };
 
 / {
-    mou0: mou0 {
+    mouselistener: mouselistener {
         compatible = "zmk,input-listener";
         status = "disabled";
-        device = <&mou0>;
     };
 };

@@ -6,7 +6,7 @@
  
 #include "trackball.dtsi"
 
-&mou0 {
+&mouselistener {
     status = "okay";
     device = <&mou0>;
 };
