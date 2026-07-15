@@ -5,3 +5,8 @@
  */
  
 #include "trackball.dtsi"
+
+&mou0 {
+    status = "okay";
+    device = <&mou0>;
+};

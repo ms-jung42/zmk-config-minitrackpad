@@ -31,7 +31,7 @@
 };
 
 
-&mou1 {
+&mou0 {
     scroller {
         layers = <1>;
         input-processors = <&zip_xy_to_scroll_mapper>;

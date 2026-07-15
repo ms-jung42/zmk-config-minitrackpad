@@ -35,52 +35,62 @@
 	status = "disabled";
 };
 
+
 &pinctrl {
-	spi2_default: spi2_default {
-		group1 {
-			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
-			<NRF_PSEL(SPIM_MOSI, 1, 15)>,
-			<NRF_PSEL(SPIM_MISO, 1, 14)>;
-		};
-	};
-	spi2_sleep: spi2_sleep {
-		group1 {
-			psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
-			<NRF_PSEL(SPIM_MOSI, 1, 15)>,
-			<NRF_PSEL(SPIM_MISO, 1, 14)>;
-			low-power-enable;
-		};
-	};
+    /* configuration for spi2 device, default state */
+    spi2_default: spi2_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+                    <NRF_PSEL(SPIM_MOSI, 1, 15)>,
+                    <NRF_PSEL(SPIM_MISO, 1, 14)>;
+        };
+    };
+    /* configuration for spi2 device, sleep state */
+    spi2_sleep: spi2_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+                    <NRF_PSEL(SPIM_MOSI, 1, 15)>,
+                    <NRF_PSEL(SPIM_MISO, 1, 14)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi2 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&spi2_default>;
+    pinctrl-1 = <&spi2_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+// devices on spi2
+
+// CS pins for devices on spi2
+&spi2 {
+    cs-gpios = <&xiao_d 7 GPIO_ACTIVE_LOW>;
 };
 
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
 &spi2 {
-	compatible = "nordic,nrf-spim";
-  status = "okay";
-	pinctrl-0 = <&spi2_default>;
-	pinctrl-1 = <&spi2_sleep>;
-	pinctrl-names = "default", "sleep";
-	cs-gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
-
-	mou1: pd@0 {
-		compatible = "pixart,paw3395";
- 		label = "MOU1";
-		reg = <0>;
-		spi-max-frequency = <4000000>;
-		status = "okay";
-		irq-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-		cpi = <600>;
-		invert-y;
-		evt-type = <INPUT_EV_REL>;
-		x-input-code = <INPUT_REL_X>;
-		y-input-code = <INPUT_REL_Y>;
-	};
+    mou0: mou0@0 {
+        status = "okay";
+        compatible = "pixart,paw3395";
+        reg = <0>;
+        spi-max-frequency = <4000000>;
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
+        irq-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        cpi = <1000>;
+    };
 };
 
-/{ 
-	mouse_input_listener {
-		compatible = "zmk, input-listner";
-		device = <&mou1>;
-	};
+/ {
+    mou0: mou0 {
+        compatible = "zmk,input-listener";
+        status = "disabled";
+        device = <&mou0>;
+    };
 };
